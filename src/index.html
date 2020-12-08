@@ -1,13 +1,29 @@
-
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="div1">
+        <p id="p1">This is a paragraph from html .</p>
+        <p id="p2">This is another paragraph from js .</p>
+        </div>
 <script type="text/javascript" src="creds.js"></script>
-<script type="text/javascript" src="getDatas.js"></script>
+<!-- <script type="text/javascript" src="getDatas.js"></script> -->
 
 <script type="text/javascript">
     var total = 5;
+    document.open()
     for (i = 0; i <= total; i++) {
         document.write('<p>' + i + '</p>');
     }  
-    test();
+    
+    getToken( printToken )
 
-    document.write( '<p>' + getToken() + '<p>')
+    function printToken(token)
+    {
+        document.getElementById("p2").innerHTML = token
+    }
+    document.close()
 </script>
+
+
+</body>
+</html>
