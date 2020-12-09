@@ -345,7 +345,7 @@ body{
 .agileits_updates_grid_left1 h5 a:hover{
 	color:#212121;
 }
-.services-grid1:nth-child(2){
+.services-grid1:nth-child(2n+0){
 	padding:3em 0;
 }
 .services-grid1:hover .services-grid-right-grid{
