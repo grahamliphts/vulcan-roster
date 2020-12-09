@@ -13,14 +13,122 @@
     document.open()
     for (i = 0; i <= total; i++) {
         document.write('<p>' + i + '</p>');
-    }  
-    
-    getToken( printToken )
+    }
+
+    getToken(printToken)
+    getToken(buildGuild).then(console.log)
 
     function printToken(token)
     {
         document.getElementById("p2").innerHTML = token
     }
+
+    const ENCHANTABLE_SLOTS = [
+      'BACK',
+      'CHEST',
+      'WRIST',
+      'FEET',
+      'HANDS',
+      'MAIN_HAND',
+      'OFF_HAND',
+      'FINGER_1',
+      'FINGER_2',
+    ]
+
+    async function buildGuild(token) {
+      // step 1 : fetch members
+      const PLAYERS_ROSTER_1 = ['celuryl', 'vanii']
+      const PLAYERS_ROSTER_2 = ['elzegan', 'maxidoo']
+
+      return {
+        rosters: [
+          await buildRoster(PLAYERS_ROSTER_1, token),
+          await buildRoster(PLAYERS_ROSTER_2, token)
+        ]
+      }
+    }
+
+    async function buildRoster(players, token) {
+      return await Promise.all(players.map(async (player) => (await buildPlayer(player, token))))
+    }
+
+    async function buildPlayer(player, token) {
+      return {
+        name: player,
+        class: null,
+        equipment: await buildEquipment(player, token),
+        jobs: buildJobs(player, token),
+        raidProgress: buildRaidProgress(player, token),
+      }
+    }
+
+    async function buildEquipment(player, token) {
+      const url = `https://eu.api.blizzard.com/profile/wow/character/hyjal/${player}/equipment?namespace=profile-eu&locale=en_US&access_token=${token}`
+
+      const {
+        ilvlSum,
+        ilvlDivider,
+        slackScore,
+        playerEnchantments
+      } = await callApi(url, (({ equipped_items }) =>
+         equipped_items.reduce(({ ilvlSum, ilvlDivider, slackScore, playerEnchantments }, item) => {
+           const { level, slot } = item
+
+           // ignore low level items
+           if (level.value < 50) {
+             return { ilvlSum, ilvlDivider, slackScore, playerEnchantments }
+           }
+
+           // handle enchantable item
+           if (ENCHANTABLE_SLOTS.includes(slot.type)) {
+             slackScore++
+             playerEnchantments[slot.type] = "Pas d'enchantement"
+
+             if (item.enchantments) {
+               slackScore--
+               playerEnchantments[slot.type] = item.enchantments[0].display_string.replace('Enchanted: ', '')
+             }
+           }
+
+           return {
+             ilvlSum: ilvlSum + level.value,
+             ilvlDivider: ilvlDivider + 1,
+             slackScore,
+             playerEnchantments
+           }
+         }, { ilvlSum: 0, ilvlDivider: 0, slackScore: 0, playerEnchantments: {} })
+      ))
+
+      return {
+        ilvl: parseFloat((ilvlSum / ilvlDivider).toFixed(2)),
+        enchantments: playerEnchantments,
+        slackScore,
+      }
+    }
+
+    function buildJobs(player, token) {
+
+      return {
+        main: { name: null, expansion: null, skill_points: 0, max_skill_points: 0 },
+        secondary: { name: null, expansion: null, skill_points: 0, max_skill_points: 0 },
+      }
+    }
+
+    function buildRaidProgress(player, token) {
+
+      return {
+        normalProgress: 0,
+        heroicProgress: 0,
+        mythicProgress: 0,
+        bossCount: 0
+      }
+    }
+
+    async function callApi(url, callback) {
+      const data = (await JsonFetch(url))
+      return callback(data)
+    }
+
     document.close()
 </script>
 
