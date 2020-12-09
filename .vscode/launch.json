@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "file:///D:/vulcan/vulcan-roster/src/index.html",
+            "url": "file:///D:/vulcan/vulcan-roster/index.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
