@@ -66,10 +66,23 @@ async function buildPlayer(player, token) {
   return {
     name: player,
     class: null,
+    renders: await getAvatar(player, token),
     equipment: await buildEquipment(player, token),
     jobs: await buildJobs(player, token),
     raidProgress: await buildRaidProgress(player, token),
   }
+}
+
+async function getAvatar(player, token) {
+  const url = `https://eu.api.blizzard.com/profile/wow/character/hyjal/${player}/character-media?namespace=profile-eu&locale=en_US&access_token=${token}`
+
+  return await callApi(url, ({ assets }) => {
+
+    return {
+      avatar: assets[0].value,
+      main: assets[2].value
+    }
+  })
 }
 
 async function buildEquipment(player, token) {
@@ -187,13 +200,13 @@ function createPlayerColElement() {
   return div
 }
 
-function createPlayerElement({ name, equipment }) {
+function createPlayerElement({ name, equipment, renders }) {
   return `
     <div class="services-grid1">
       <div class="col-md-4 services-grid-right">
         <div class="services-grid-right-grid hvr-radial-out">
           <span>
-            <img src="images/avatar.jpg" />
+            <img src="${renders.avatar}" />
           </span>
         </div>
       </div>
