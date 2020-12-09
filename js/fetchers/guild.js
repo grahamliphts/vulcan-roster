@@ -1,6 +1,6 @@
 import { JsonFetch, getToken } from './creds.js'
 
-getToken(buildGuild).then(console.log)
+getToken(buildGuild).then(renderGuild)
 
 const ENCHANTABLE_SLOTS = [
   'BACK',
@@ -16,7 +16,22 @@ const ENCHANTABLE_SLOTS = [
 
 async function buildGuild(token) {
   // step 1 : fetch members
-  const PLAYERS_ROSTER_1 = ['celuryl', 'vanii']
+  const PLAYERS_ROSTER_1 = [
+    'celuryl', 
+    'vanii', 
+    'chandarax', 
+    'harnoêl',
+    'pateàcrepe',
+    'valyriä',
+    'grigadc',
+    'azouki',
+    'anawelle',
+    'lalia',
+    'konian',
+    'soupeline',
+    'skëmp',
+    'fripougnette',
+  ]
   const PLAYERS_ROSTER_2 = ['elzegan', 'maxidoo']
 
   return {
@@ -124,4 +139,54 @@ async function buildRaidProgress(player) {
 async function callApi(url, callback) {
   const data = (await JsonFetch(url))
   return callback(data)
+}
+
+function renderGuild({ rosters }) {
+  renderRoster(rosters[0], document.getElementById('roster_1_player_container'))
+  renderRoster(rosters[1], document.getElementById('roster_2_player_container'))
+}
+
+function renderRoster(players, parent) {
+  let playerColElements = [
+    createPlayerColElement(),
+    createPlayerColElement(),
+    createPlayerColElement()
+  ]
+
+  players.forEach((player, index) => {
+    playerColElements[index%3].innerHTML += createPlayerElement(player)
+  })
+
+  playerColElements.forEach(colElement => {
+    parent.appendChild(colElement)
+  })
+
+  parent.innerHTML += '<div class="clearfix"> </div>'
+}
+
+function createPlayerColElement() {
+  const div = document.createElement('div')
+  div.className += "col-md-4 services-grid"
+
+  return div
+}
+
+function createPlayerElement({ name, equipment }) {
+  return `
+    <div class="services-grid1">
+      <div class="col-md-4 services-grid-right">
+        <div class="services-grid-right-grid hvr-radial-out">
+          <span>
+            <img src="images/avatar.jpg" />
+          </span>
+        </div>
+      </div>
+      <div class="col-md-8 services-grid-left services-grid-left1">
+        <h5><a href="#" data-toggle="modal" data-target="#playerModal">${name}</a></h5>
+        <p>${equipment.ilvl}</p>
+        <p>${equipment.slackScore}</p>
+      </div>
+      <div class="clearfix"> </div>
+    </div>
+  `
 }
