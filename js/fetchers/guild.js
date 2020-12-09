@@ -32,7 +32,23 @@ async function buildGuild(token) {
     'skëmp',
     'fripougnette',
   ]
-  const PLAYERS_ROSTER_2 = ['elzegan', 'maxidoo']
+  const PLAYERS_ROSTER_2 = [
+    'elzegan', 
+    'maxidoo',
+    'rogalhorn',
+    'athénaís',
+    'nydile',
+    'skylorgs',
+    'zylïsse',
+    'shiï',
+    'shadomasou',
+    'sarrg',
+    'shendry',
+    'høkanashir',
+    'omä',
+    'universis',
+    'sahyaa',
+  ]
 
   return {
     rosters: [
