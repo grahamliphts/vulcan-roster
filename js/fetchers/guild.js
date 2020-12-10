@@ -237,10 +237,9 @@ function handleClickOnPlayer() {
   document.getElementById('modal-title').innerText = capitalize(name)
   document.getElementById('modal-avatar').src = renders.mainRaw
   document.getElementById('modal-enchantments').innerHTML = printEnchantments(equipment.enchantments)
-  document.getElementById('modal-jobs').innerHTML = printJson(jobs.main) + '<br/>' + printJson(jobs.secondary)
-  document.getElementById('modal-raid-progress').innerHTML = printJson(raidProgress)
+  document.getElementById('modal-jobs').innerHTML = printJobs(jobs)
+  document.getElementById('modal-raid-progress').innerHTML = printRaidProgress(raidProgress)
 }
-
 
 function printEnchantments(enchantments) {
   return ENCHANTABLE_SLOTS.map(slot => {
@@ -251,9 +250,39 @@ function printEnchantments(enchantments) {
   }).join('')
 }
 
-function printJson(json) {
-  return Object.keys(json).map(key => `<span>${key} ${json[key]}</span>`).join('<br/>')
+function printJobs({ main, secondary }) {
+  let res = ''
+
+  res += main ? printJob(main) : ''
+  res += secondary ? printJob(secondary) : ''
+
+  return res
 }
+
+function printJob({ name, skillPoints, maxSkillPoints }) {
+  return `<div>
+      <span><strong>${name}</strong></span>
+      <span>${skillPoints} / ${maxSkillPoints}</span>
+    </div>`
+}
+
+function printRaidProgress({ totalBosses, normalProgress, heroicProgress, mythicProgress }) {
+  return `
+    <div>
+      <span><strong>Normal</strong></span>
+      <span>${normalProgress} / ${totalBosses}</span>
+    </div>
+    <div>
+      <span><strong>Heroic</strong></span>
+      <span>${heroicProgress} / ${totalBosses}</span>
+    </div>
+    <div>
+      <span><strong>Mythic</strong></span>
+      <span>${mythicProgress} / ${totalBosses}</span>
+    </div>
+    `
+}
+
 
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
