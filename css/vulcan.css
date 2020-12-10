@@ -8,3 +8,19 @@
   width: 300%;
   margin: -38% -95%;
 }
+
+.modal-body p.title {
+  text-transform: uppercase;
+  color: #333;
+  font-weight: bold;
+}
+
+.slack {
+  color: #f03434;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.no-slack {
+  color: #03a678;
+}

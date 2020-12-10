@@ -106,7 +106,7 @@ async function buildEquipment(player, token) {
       // handle enchantable item
       if (ENCHANTABLE_SLOTS.includes(slot.type)) {
         slackScore++
-        playerEnchantments[slot.type] = "Pas d'enchantement"
+        playerEnchantments[slot.type] = "No enchant"
 
         if (item.enchantments) {
           slackScore--
@@ -232,14 +232,23 @@ function createPlayerElement({ name, equipment, renders }) {
 }
 
 function handleClickOnPlayer() {
-  console.log(this)
   const { name, renders, raidProgress, equipment, jobs } = this
 
   document.getElementById('modal-title').innerText = capitalize(name)
   document.getElementById('modal-avatar').src = renders.mainRaw
-  document.getElementById('modal-enchantments').innerHTML = printJson(equipment.enchantments)
+  document.getElementById('modal-enchantments').innerHTML = printEnchantments(equipment.enchantments)
   document.getElementById('modal-jobs').innerHTML = printJson(jobs.main) + '<br/>' + printJson(jobs.secondary)
   document.getElementById('modal-raid-progress').innerHTML = printJson(raidProgress)
+}
+
+
+function printEnchantments(enchantments) {
+  return ENCHANTABLE_SLOTS.map(slot => {
+    return enchantments[slot] ? `<div>
+      <span><strong>${capitalize(slot.toLowerCase().replace('_', ' '))}</strong></span>
+      <span class="${enchantments[slot] === "No enchant" ? 'slack' : 'no-slack'}">${enchantments[slot]}</span>
+    </div>` : ''
+  }).join('')
 }
 
 function printJson(json) {
