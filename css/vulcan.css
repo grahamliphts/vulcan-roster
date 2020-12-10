@@ -1,0 +1,10 @@
+.crop-main {
+  overflow: hidden;
+}
+
+/* "MAGIE NOIRE, MAGIE NOIRE */
+.crop-main-img {
+  object-fit: fill;
+  width: 300%;
+  margin: -38% -95%;
+}
