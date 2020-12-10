@@ -80,7 +80,8 @@ async function getAvatar(player, token) {
 
     return {
       avatar: assets[0].value,
-      main: assets[2].value
+      main: assets[2].value,
+      mainRaw: assets[3].value,
     }
   })
 }
@@ -183,7 +184,7 @@ function renderRoster(players, parent) {
   ]
 
   players.forEach((player, index) => {
-    playerColElements[index%3].innerHTML += createPlayerElement(player)
+    playerColElements[index%3].appendChild(createPlayerElement(player))
   })
 
   playerColElements.forEach(colElement => {
@@ -191,6 +192,13 @@ function renderRoster(players, parent) {
   })
 
   parent.innerHTML += '<div class="clearfix"> </div>'
+
+  const tags = [].slice.call(parent.getElementsByTagName('h5'))
+  players.forEach((player) => {
+    tags
+      .find(({ innerText }) => innerText.toLowerCase() === player.name)
+      .addEventListener('click', handleClickOnPlayer.bind(player))
+  })
 }
 
 function createPlayerColElement() {
@@ -201,8 +209,11 @@ function createPlayerColElement() {
 }
 
 function createPlayerElement({ name, equipment, renders }) {
-  return `
-    <div class="services-grid1">
+  
+  const div = document.createElement('div')
+  div.className += 'services-grid1'
+
+  div.innerHTML = `
       <div class="col-md-4 services-grid-right">
         <div class="services-grid-right-grid hvr-radial-out">
           <span>
@@ -216,6 +227,25 @@ function createPlayerElement({ name, equipment, renders }) {
         <p>${equipment.slackScore}</p>
       </div>
       <div class="clearfix"> </div>
-    </div>
   `
+  return div
+}
+
+function handleClickOnPlayer() {
+  console.log(this)
+  const { name, renders, raidProgress, equipment, jobs } = this
+
+  document.getElementById('modal-title').innerText = capitalize(name)
+  document.getElementById('modal-avatar').src = renders.mainRaw
+  document.getElementById('modal-enchantments').innerHTML = printJson(equipment.enchantments)
+  document.getElementById('modal-jobs').innerHTML = printJson(jobs.main) + '<br/>' + printJson(jobs.secondary)
+  document.getElementById('modal-raid-progress').innerHTML = printJson(raidProgress)
+}
+
+function printJson(json) {
+  return Object.keys(json).map(key => `<span>${key} ${json[key]}</span>`).join('<br/>')
+}
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
