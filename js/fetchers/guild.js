@@ -14,6 +14,21 @@ const ENCHANTABLE_SLOTS = [
   'FINGER_2',
 ]
 
+const NATHRIA_BOSS = [
+  'Shriekwing',
+  'Huntsman Altimor',
+  'Hungering Destroyer',
+  'Sun King\'s Salvation',
+  'Artificer Xy\'mox',
+  'Lady Inerva Darkvein',
+  'The Council of Blood',
+  'Sludgefist',
+  'Stone Legion Generals',
+  'Sire Denathrius'
+]
+
+const NATHRIA_BOSS_SLUGS = NATHRIA_BOSS.map(boss => boss.toLowerCase().replaceAll(' ', '-').replaceAll('\'', ''))
+
 async function buildGuild(token) {
   // step 1 : fetch members
   const PLAYERS_ROSTER_1 = [
@@ -49,17 +64,32 @@ async function buildGuild(token) {
     'universis',
     'sahyaa',
   ]
-
   return {
     rosters: [
       await buildRoster(PLAYERS_ROSTER_1, token),
       await buildRoster(PLAYERS_ROSTER_2, token)
-    ]
+    ],
+    progress: await buildGuildProgress(NATHRIA_BOSS_SLUGS)
   }
 }
 
 async function buildRoster(players, token) {
   return await Promise.all(players.map(async (player) => (await buildPlayer(player, token))))
+}
+
+async function buildGuildProgress(bossSlugs) {
+  return {
+    normal: await buildGuildProgressMode(bossSlugs, 'normal'),
+    heroic: await buildGuildProgressMode(bossSlugs, 'heroic'),
+    mythic: await buildGuildProgressMode(bossSlugs, 'mythic'),
+  }
+}
+
+async function buildGuildProgressMode(bossSlugs, mode) {
+  const urls = bossSlugs.map(slug => `https://raider.io/api/v1/guilds/boss-kill?region=eu&realm=hyjal&guild=vulcan&raid=castle-nathria&boss=${slug}&difficulty=${mode}`)
+  return await Promise.all(urls.map(async (url) => (await callApi(url, (data) => {
+    return data.kill?.defeatedAt || null
+  }))))
 }
 
 async function buildPlayer(player, token) {
@@ -171,9 +201,29 @@ async function callApi(url, callback) {
   return callback(data)
 }
 
-function renderGuild({ rosters }) {
+function renderGuild({ rosters, progress }) {
   renderRoster(rosters[0], document.getElementById('roster_1_player_container'))
   renderRoster(rosters[1], document.getElementById('roster_2_player_container'))
+  renderRaidProgress(progress, document.getElementById('slider3'))
+}
+
+function renderRaidProgress({ normal, heroic, mythic }, parent) {
+  console.log(parent)
+  const progressNodes = parent.getElementsByTagName('li')
+  renderRaidProgressMode(progressNodes[0], normal)
+  renderRaidProgressMode(progressNodes[1], heroic)
+  renderRaidProgressMode(progressNodes[2], mythic)
+}
+
+function renderRaidProgressMode(parent, dates) {
+  [].slice.call(parent.getElementsByTagName('h5')).forEach((node, index) => {
+    if (dates[index]) {
+      node.innerHTML = `${NATHRIA_BOSS[index]} (${formatDate(dates[index])})`
+    } else {
+      node.innerHTML = `${NATHRIA_BOSS[index]}`
+    }
+    node.className += dates[index] ? 'no-slack' : ''
+  })
 }
 
 function renderRoster(players, parent) {
@@ -209,7 +259,7 @@ function createPlayerColElement() {
 }
 
 function createPlayerElement({ name, equipment, renders }) {
-  
+
   const div = document.createElement('div')
   div.className += 'services-grid1'
 
@@ -286,4 +336,10 @@ function printRaidProgress({ totalBosses, normalProgress, heroicProgress, mythic
 
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function formatDate(date) {
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
+
+  return (new Date(date)).toLocaleDateString('fr-FR', options)
 }
