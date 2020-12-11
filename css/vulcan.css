@@ -24,3 +24,27 @@
 .no-slack {
   color: #03a678 !important;
 }
+
+.vulcan-hidden {
+  visibility: hidden !important;
+}
+
+#progress {
+  width: 100%;
+  background-color: grey;
+}
+
+#progress-bar {
+  width: 1%;
+  height: 30px;
+  background-color: #F44336;
+}
+
+#progress-label {
+  width: 100%;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  position: absolute;
+  margin-top: -30px;
+}

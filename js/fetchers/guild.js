@@ -1,5 +1,8 @@
 import { JsonFetch, getToken } from './creds.js'
 
+let PROGRESS_BAR = 0
+let PROGRESS = 146
+
 getToken(buildGuild).then(renderGuild)
 
 const ENCHANTABLE_SLOTS = [
@@ -64,13 +67,15 @@ async function buildGuild(token) {
     'universis',
     'sahyaa',
   ]
-  return {
+  const res = {
     rosters: [
       await buildRoster(PLAYERS_ROSTER_1, token),
       await buildRoster(PLAYERS_ROSTER_2, token)
     ],
     progress: await buildGuildProgress(NATHRIA_BOSS_SLUGS)
   }
+
+  return res
 }
 
 async function buildRoster(players, token) {
@@ -198,17 +203,26 @@ async function buildRaidProgress(player) {
 
 async function callApi(url, callback) {
   const data = (await JsonFetch(url))
+  updateProgressBar()
   return callback(data)
 }
 
+function updateProgressBar() {
+  PROGRESS_BAR++
+    document.getElementById('progress-bar').style.width = Math.round((PROGRESS_BAR / PROGRESS) * 100) + '%'
+}
+
 function renderGuild({ rosters, progress }) {
+  document.getElementById('progress').classN'hidden'
+  document.getElementById('roster_1').classList.remove('vulcan-hidden')
+  document.getElementById('roster_2').classList.remove('vulcan-hidden')
+  document.getElementById('raid-progress').classList.remove('vulcan-hidden')
   renderRoster(rosters[0], document.getElementById('roster_1_player_container'))
   renderRoster(rosters[1], document.getElementById('roster_2_player_container'))
   renderRaidProgress(progress, document.getElementById('slider3'))
 }
 
 function renderRaidProgress({ normal, heroic, mythic }, parent) {
-  console.log(parent)
   const progressNodes = parent.getElementsByTagName('li')
   renderRaidProgressMode(progressNodes[0], normal)
   renderRaidProgressMode(progressNodes[1], heroic)
