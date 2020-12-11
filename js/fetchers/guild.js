@@ -213,7 +213,7 @@ function updateProgressBar() {
 }
 
 function renderGuild({ rosters, progress }) {
-  document.getElementById('progress').classN'hidden'
+  document.getElementById('progress').className += 'hidden'
   document.getElementById('roster_1').classList.remove('vulcan-hidden')
   document.getElementById('roster_2').classList.remove('vulcan-hidden')
   document.getElementById('raid-progress').classList.remove('vulcan-hidden')
