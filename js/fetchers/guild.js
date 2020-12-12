@@ -1,7 +1,7 @@
 import { JsonFetch, getToken } from './creds.js'
 
 let PROGRESS_BAR = 0
-let PROGRESS = 146
+let PROGRESS = 175
 
 getToken(buildGuild).then(renderGuild)
 
@@ -30,42 +30,57 @@ const NATHRIA_BOSS = [
   'Sire Denathrius'
 ]
 
-const NATHRIA_BOSS_SLUGS = NATHRIA_BOSS.map(boss => boss.toLowerCase().replaceAll(' ', '-').replaceAll('\'', ''))
+const NATHRIA_BOSS_SLUGS = NATHRIA_BOSS.map(boss => slug(boss))
+
+const CLASS = {
+  'death-knight': { color: '#C41E3A', icon: null },
+  'demon-hunter': { color: '#A330C9', icon: null },
+  'druid': { color: '#FF7C0A', icon: null },
+  'hunter': { color: '#AAD372', icon: null },
+  'mage': { color: '#3FC7EB', icon: null },
+  'monk': { color: '#00FF98', icon: null },
+  'paladin': { color: '#F48CBA', icon: null },
+  'priest': { color: '#CCCCCC', icon: null },
+  'rogue': { color: '#FFF468', icon: null },
+  'shaman': { color: '#0070DD', icon: null },
+  'warlock': { color: '#8788EE', icon: null },
+  'warrior': { color: '#C69B6D', icon: null },
+}
 
 async function buildGuild(token) {
   // step 1 : fetch members
   const PLAYERS_ROSTER_1 = [
-    'celuryl', 
-    'vanii', 
-    'chandarax', 
-    'harnoêl',
-    'pateàcrepe',
-    'valyriä',
-    'grigadc',
-    'azouki',
-    'anawelle',
-    'lalia',
-    'konian',
-    'soupeline',
-    'skëmp',
-    'fripougnette',
+    {name: 'celuryl', role: 'tank'}, 
+    {name: 'vanii', role: 'tank'}, 
+    {name: 'chandarax', role: 'heal'}, 
+    {name: 'harnoêl', role: 'heal'},
+    {name: 'pateàcrepe', role: 'heal'},
+    {name: 'valyriä', role: 'dps'},
+    {name: 'grigadc', role: 'dps'},
+    {name: 'azouki', role: 'dps'},
+    {name: 'anawelle', role: 'dps'},
+    {name: 'lalia', role: 'dps'},
+    {name: 'konian', role: 'dps'},
+    {name: 'soupeline', role: 'dps'},
+    {name: 'skëmp', role: 'dps'},
+    {name: 'fripougnette', role: 'dps'},
   ]
   const PLAYERS_ROSTER_2 = [
-    'elzegan', 
-    'maxidoo',
-    'rogalhorn',
-    'athénaís',
-    'nydile',
-    'skýlorg',
-    'zylïsse',
-    'shiï',
-    'shadomasou',
-    'sarrg',
-    'shendry',
-    'høkanashir',
-    'omä',
-    'universis',
-    'sahyaa',
+    {name: 'elzegan', role: 'tank'}, 
+    {name: 'rogalhorn', role: 'tank'},
+    {name: 'athénaís', role: 'heal'},
+    {name: 'nydile', role: 'heal'},
+    {name: 'skýlorg', role: 'heal'},
+    {name: 'maxidoo', role: 'dps'},
+    {name: 'zylïsse', role: 'dps'},
+    {name: 'shiï', role: 'dps'},
+    {name: 'shadomasou', role: 'dps'},
+    {name: 'sarrg', role: 'dps'},
+    {name: 'shendry', role: 'dps'},
+    {name: 'høkanashir', role: 'dps'},
+    {name: 'omä', role: 'dps'},
+    {name: 'universis', role: 'dps'},
+    {name: 'sahyaa', role: 'dps'},
   ]
   const res = {
     rosters: [
@@ -74,6 +89,8 @@ async function buildGuild(token) {
     ],
     progress: await buildGuildProgress(NATHRIA_BOSS_SLUGS)
   }
+
+  console.log(res)
 
   return res
 }
@@ -97,15 +114,27 @@ async function buildGuildProgressMode(bossSlugs, mode) {
   }))))
 }
 
-async function buildPlayer(player, token) {
+async function buildPlayer({name, role}, token) {
   return {
-    name: player,
-    class: null,
-    renders: await getAvatar(player, token),
-    equipment: await buildEquipment(player, token),
-    jobs: await buildJobs(player, token),
-    raidProgress: await buildRaidProgress(player, token),
+    name,
+    role,
+    profile: await getProfile(name, token),
+    renders: await getAvatar(name, token),
+    equipment: await buildEquipment(name, token),
+    jobs: await buildJobs(name, token),
+    raidProgress: await buildRaidProgress(name, token),
   }
+}
+
+async function getProfile(player, token) {
+  const url = `https://eu.api.blizzard.com/profile/wow/character/hyjal/${player}?namespace=profile-eu&locale=en_US&access_token=${token}`
+
+  return await callApi(url, ({ character_class, active_title }) => {
+    return {
+      class: character_class.name,
+      title: active_title?.display_string.replace('{name}', capitalize(player)) || capitalize(player),
+    }
+  })
 }
 
 async function getAvatar(player, token) {
@@ -209,7 +238,7 @@ async function callApi(url, callback) {
 
 function updateProgressBar() {
   PROGRESS_BAR++
-    document.getElementById('progress-bar').style.width = Math.round((PROGRESS_BAR / PROGRESS) * 100) + '%'
+  document.getElementById('progress-bar').style.width = Math.round((PROGRESS_BAR / PROGRESS) * 100) + '%'
 }
 
 function renderGuild({ rosters, progress }) {
@@ -260,7 +289,7 @@ function renderRoster(players, parent) {
   const tags = [].slice.call(parent.getElementsByTagName('h5'))
   players.forEach((player) => {
     tags
-      .find(({ innerText }) => innerText.toLowerCase() === player.name)
+      .find(({ innerText }) => innerText.toLowerCase().includes(player.name))
       .addEventListener('click', handleClickOnPlayer.bind(player))
   })
   const imgTags = [].slice.call(parent.getElementsByTagName('img'))
@@ -278,7 +307,9 @@ function createPlayerColElement() {
   return div
 }
 
-function createPlayerElement({ name, equipment, renders }) {
+function createPlayerElement({ name, role, equipment, renders, profile }) {
+  const ilvlStyle = equipment.ilvl < 170 ? 'style="color: red"' : ''
+  const slackScoreColor = equipment.slackScore > 1 ? 'red' : 'darkseagreen'
 
   const div = document.createElement('div')
   div.className += 'services-grid1'
@@ -293,9 +324,12 @@ function createPlayerElement({ name, equipment, renders }) {
         </div>
       </div>
       <div class="col-md-8 services-grid-left services-grid-left1">
-        <h5><a href="#" data-toggle="modal" data-target="#playerModal">${name}</a></h5>
-         <p>${equipment.ilvl < 170 ? `<span style="color: red">${equipment.ilvl}</span>` : equipment.ilvl } 
-         ${equipment.slackScore > 1 ? ` | <span style="color: red">${equipment.slackScore}</span></p>` : `| <span style="color: darkseagreen">${equipment.slackScore}</span> `}
+        <h5><a href="#" data-toggle="modal" data-target="#playerModal">${profile.title}</a></h5>
+         <p>
+           <span style="color: ${CLASS[slug(profile.class)].color}; text-transform: uppercase;">${profile.class}</span> | 
+           <span style="text-transform: uppercase">${role}</span> | 
+           <span ${ilvlStyle}>${equipment.ilvl}</span> | 
+           <span style="color: ${slackScoreColor}">${equipment.slackScore}</span>
       </div>
       <div class="clearfix"> </div>
   `
@@ -303,9 +337,9 @@ function createPlayerElement({ name, equipment, renders }) {
 }
 
 function handleClickOnPlayer() {
-  const { name, renders, raidProgress, equipment, jobs } = this
+  const { name, renders, raidProgress, equipment, jobs, profile } = this
 
-  document.getElementById('modal-title').innerText = capitalize(name)
+  document.getElementById('modal-title').innerText = capitalize(profile.title)
   document.getElementById('modal-avatar').src = renders.mainRaw
   document.getElementById('modal-enchantments').innerHTML = printEnchantments(equipment.enchantments)
   document.getElementById('modal-jobs').innerHTML = printJobs(jobs)
@@ -363,4 +397,8 @@ function formatDate(date) {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
 
   return (new Date(date)).toLocaleDateString('fr-FR', options)
+}
+
+function slug(string) {
+  return string.toLowerCase().replaceAll(' ', '-').replaceAll('\'', '')
 }
