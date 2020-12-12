@@ -56,7 +56,7 @@ async function buildGuild(token) {
     'rogalhorn',
     'athénaís',
     'nydile',
-    'skylorgs',
+    'skýlorg',
     'zylïsse',
     'shiï',
     'shadomasou',
