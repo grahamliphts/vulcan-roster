@@ -276,7 +276,6 @@ function createPlayerElement({ name, equipment, renders }) {
 
   const div = document.createElement('div')
   div.className += 'services-grid1'
-
   div.innerHTML = `
       <div class="col-md-4 services-grid-right">
         <div class="services-grid-right-grid hvr-radial-out">
@@ -287,8 +286,8 @@ function createPlayerElement({ name, equipment, renders }) {
       </div>
       <div class="col-md-8 services-grid-left services-grid-left1">
         <h5><a href="#" data-toggle="modal" data-target="#playerModal">${name}</a></h5>
-        <p>${equipment.ilvl}</p>
-        <p>${equipment.slackScore}</p>
+         <p>${equipment.ilvl < 170 ? `<span style="color: red">${equipment.ilvl}</span>` : equipment.ilvl } 
+         ${equipment.slackScore > 1 ? ` | <span style="color: red">${equipment.slackScore}</span></p>` : `| <span style="color: darkseagreen">${equipment.slackScore}</span> `}
       </div>
       <div class="clearfix"> </div>
   `
