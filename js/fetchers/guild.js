@@ -90,7 +90,7 @@ async function buildGuild(token) {
     progress: await buildGuildProgress(NATHRIA_BOSS_SLUGS)
   }
 
-  console.log(res)
+  //console.log(res)
 
   return res
 }
