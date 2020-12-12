@@ -263,6 +263,12 @@ function renderRoster(players, parent) {
       .find(({ innerText }) => innerText.toLowerCase() === player.name)
       .addEventListener('click', handleClickOnPlayer.bind(player))
   })
+  const imgTags = [].slice.call(parent.getElementsByTagName('img'))
+  players.forEach((player) => {
+    imgTags
+      .find(({ name }) => name.toLowerCase() === player.name)
+      .addEventListener('click', handleClickOnPlayer.bind(player))
+  })
 }
 
 function createPlayerColElement() {
@@ -280,7 +286,9 @@ function createPlayerElement({ name, equipment, renders }) {
       <div class="col-md-4 services-grid-right">
         <div class="services-grid-right-grid hvr-radial-out">
           <span>
-            <img src="${renders.avatar}" />
+          <a href="#" data-toggle="modal" data-target="#playerModal">
+            <img src="${renders.avatar}"  name = '${name}' />
+            </a>
           </span>
         </div>
       </div>
