@@ -76,7 +76,6 @@ async function buildGuild(token) {
     {name: 'fiedryeva', role: 'dps'},
     {name: 'shadomasou', role: 'dps'},
     {name: 'sarrg', role: 'dps'},
-    {name: 'shendry', role: 'dps'},
     {name: 'høkanashir', role: 'dps'},
     {name: 'tyänna', role: 'dps'},
     {name: 'universis', role: 'dps'},
