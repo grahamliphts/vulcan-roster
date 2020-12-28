@@ -26,7 +26,7 @@ const renderRaidProgressMode = (parent, dates) => {
     } else {
       node.innerHTML = `${NATHRIA_BOSS[index]}`
     }
-    node.className += dates[index] ? 'no-slack' : ''
+    node.className += dates[index] ? 'boss-down' : ''
   })
 }
 

@@ -1,3 +1,20 @@
+:root {
+  --vulcan-green: #03a678;
+  --vulcan-red: #f03434;
+  --death-knight: #C41E3A;
+  --demon-hunter: #A330C9;
+  --druid: #FF7C0A;
+  --hunter: #AAD372;
+  --mage: #3FC7EB;
+  --monk: #00FF98;
+  --paladin: #F48CBA;
+  --priest: #CCCCCC;
+  --rogue: #FFF468;
+  --shaman: #0070DD;
+  --warlock: #8788EE;
+  --warrior: #C69B6D;
+}
+
 .crop-main {
   overflow: hidden;
 }
@@ -15,18 +32,84 @@
   font-weight: bold;
 }
 
-.slack {
-  color: #f03434;
+.slack-enchant {
+  color: var(--vulcan-red);
   font-weight: bold;
   text-transform: uppercase;
 }
 
-.no-slack {
-  color: #03a678 !important;
+.no-slack-enchant {
+  color: var(--vulcan-green) !important;
+}
+
+.boss-down {
+  color: var(--vulcan-green) !important;
+}
+
+.slack-ilvl {
+  color: var(--vulcan-red) !important;
+}
+
+.death-knight {
+  color: var(--death-knight) !important;
+}
+
+.demon-hunter {
+  color: var(--demon-hunter) !important;
+}
+
+.druid {
+  color: var(--druid) !important;
+}
+
+.hunter {
+  color: var(--hunter) !important;
+}
+
+.mage {
+  color: var(--mage) !important;
+}
+
+.monk {
+  color: var(--monk) !important;
+}
+
+.paladin {
+  color: var(--paladin) !important;
+}
+
+.priest {
+  color: var(--priest) !important;
+}
+
+.rogue {
+  color: var(--rogue) !important;
+}
+
+.shaman {
+  color: var(--shaman) !important;
+}
+
+.warlock {
+  color: var(--warlock) !important;
+}
+
+.warrior {
+  color: var(--warrior) !important;
 }
 
 .vulcan-hidden {
   visibility: hidden !important;
+}
+
+.modal-section-title {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.modal-subsection-title {
+  text-transform: capitalize;
+  font-weight: bold;
 }
 
 #progress {
