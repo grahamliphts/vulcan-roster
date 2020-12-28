@@ -4,10 +4,10 @@ import {
   getPlayerAvatarUrl,
   getPlayerEquipmentUrl,
   getPlayerJobsUrl,
-  getPlayerRaidProgressUrl,
+  getPlayerProgressUrl,
 } from '../core/api.js'
 import { capitalize } from '../core/string.js'
-import { ENCHANTABLE_SLOTS } from '../core/constants.js'
+import { ENCHANTABLE_SLOTS, CURRENT_DUNGEONS } from '../core/constants.js'
 
 export const buildPlayer = async ({ name, role }, token) => ({
   name,
@@ -16,7 +16,7 @@ export const buildPlayer = async ({ name, role }, token) => ({
   renders: await buildAvatar(name, token),
   equipment: await buildEquipment(name, token),
   jobs: await buildJobs(name, token),
-  raidProgress: await buildRaidProgress(name, token),
+  progress: await buildProgress(name, token),
 })
 
 const buildProfile = async (player, token) =>
@@ -91,13 +91,30 @@ const buildJob = (primary) => {
   }
 }
 
-const buildRaidProgress = async (player) =>
-  await callApi(getPlayerRaidProgressUrl(player), ({ raid_progression }) => {
+const buildProgress = async (player) =>
+  await callApi(getPlayerProgressUrl(player), ({ raid_progression, mythic_plus_best_runs }) => {
     const { total_bosses, normal_bosses_killed, heroic_bosses_killed, mythic_bosses_killed } = raid_progression['castle-nathria']
+
     return {
       totalBosses: total_bosses,
       normalProgress: normal_bosses_killed,
       heroicProgress: heroic_bosses_killed,
-      mythicProgress: mythic_bosses_killed
+      mythicProgress: mythic_bosses_killed,
+      mythicPlusProgress: buildMythicPlusProgress(mythic_plus_best_runs)
     }
   })
+
+const buildMythicPlusProgress = (mythicPlusBestRuns) => {
+  return CURRENT_DUNGEONS.map(dungeonName => {
+    const bestRun = mythicPlusBestRuns.find(({ dungeon }) => dungeon === dungeonName)
+    return bestRun ? {
+      name: dungeonName,
+      level: bestRun.mythic_level,
+      completed: bestRun.num_keystone_upgrades > 0,
+      score: bestRun.score
+    } : {
+      name: dungeonName,
+      completed: undefined,
+    }
+  })
+}

@@ -50,6 +50,14 @@
   color: var(--vulcan-red) !important;
 }
 
+.run-completed {
+  color: var(--vulcan-green) !important;
+}
+
+.run-not-completed {
+  color: var(--vulcan-red) !important;
+}
+
 .death-knight {
   color: var(--death-knight) !important;
 }

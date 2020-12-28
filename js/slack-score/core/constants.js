@@ -15,6 +15,17 @@ export const CURRENT_PROGRESS_BOSS = [
 
 export const CURRENT_PROGRESS_BOSS_SLUGS = CURRENT_PROGRESS_BOSS.map(boss => slug(boss))
 
+export const CURRENT_DUNGEONS = [
+  'De Other Side',
+  'Halls of Atonement',
+  'Mists of Tirna Scithe',
+  'Plaguefall',
+  'Sanguine Depths',
+  'Spires of Ascension',
+  'The Necrotic Wake',
+  'Theater of Pain',
+]
+
 export const ENCHANTABLE_SLOTS = [
   'BACK',
   'CHEST',

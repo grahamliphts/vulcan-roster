@@ -36,13 +36,14 @@ export const createPlayerElement = ({ name, role, equipment, renders, profile })
 
 // do not use ES6 syntax as it does not allow .bind()
 export function handleClickOnPlayer() {
-  const { name, renders, raidProgress, equipment, jobs, profile } = this
+  const { name, renders, progress, equipment, jobs, profile } = this
 
   document.getElementById('modal-title').innerText = capitalize(profile.title)
   document.getElementById('modal-avatar').src = renders.mainRaw
   document.getElementById('modal-enchantments').innerHTML = printEnchantments(equipment.enchantments)
   document.getElementById('modal-jobs').innerHTML = printJobs(jobs)
-  document.getElementById('modal-raid-progress').innerHTML = printRaidProgress(raidProgress)
+  document.getElementById('modal-raid-progress').innerHTML = printRaidProgress(progress)
+  document.getElementById('modal-mythic-progress').innerHTML = printMythicPlusProgress(progress)
 }
 
 const printEnchantments = (enchantments) => 
@@ -89,3 +90,22 @@ const printRaidProgress = ({ totalBosses, normalProgress, heroicProgress, mythic
       <span>${mythicProgress} / ${totalBosses}</span>
     </div>
   `
+
+const printMythicPlusProgress = ({ mythicPlusProgress }) =>
+  mythicPlusProgress.map(run => {
+    if (run.completed !== undefined) {
+      const runClass = run.completed ? 'run-completed' : 'run-not-completed'
+      return `
+        <div>
+          <span class="modal-subsection-title">${run.name}</span>
+          <span class="${runClass}">+${run.level} (${run.score})</span>
+        </div>
+      `
+    }
+      return `
+        <div>
+          <span class="modal-subsection-title">${run.name}</span>
+          <span>Not completed yet</span>
+        </div>
+      `
+  }).join('')

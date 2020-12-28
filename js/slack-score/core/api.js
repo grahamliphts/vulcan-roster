@@ -19,8 +19,8 @@ export const getPlayerJobsUrl = (player, token) =>
   `${BNET_HOST}/${player}/professions?namespace=profile-${REGION}&locale=${LOCALE}&access_token=${token}`
 
 const RIO_HOST = 'https://raider.io/api/v1'
-export const getPlayerRaidProgressUrl = (player) =>
-  `${RIO_HOST}/characters/profile?region=${REGION}&realm=${REALM}&name=${player}&fields=raid_progression`
+export const getPlayerProgressUrl = (player) =>
+  `${RIO_HOST}/characters/profile?region=${REGION}&realm=${REALM}&name=${player}&fields=raid_progression,mythic_plus_best_runs:all`
 export const getGuildRaidProgressUrl = (boss, mode) =>
   `${RIO_HOST}/guilds/boss-kill?region=${REGION}&realm=${REALM}&guild=${GUILD}&raid=${CURRENT_PROGRESS}&boss=${boss}&difficulty=${mode}`
 
