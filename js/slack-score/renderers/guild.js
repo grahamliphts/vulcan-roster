@@ -1,6 +1,6 @@
 import { createPlayerElement, handleClickOnPlayer } from './player.js'
 import { formatDate } from '../core/date.js'
-import { NATHRIA_BOSS } from '../core/constants.js'
+import { CURRENT_PROGRESS_BOSS } from '../core/constants.js'
 
 export const renderGuild = ({ rosters, progress }) => {
   document.getElementById('progress').className += 'hidden'
@@ -22,9 +22,9 @@ const renderRaidProgress = ({ normal, heroic, mythic }, parent) => {
 const renderRaidProgressMode = (parent, dates) => {
   [].slice.call(parent.getElementsByTagName('h5')).forEach((node, index) => {
     if (dates[index]) {
-      node.innerHTML = `${NATHRIA_BOSS[index]} (${formatDate(dates[index])})`
+      node.innerHTML = `${CURRENT_PROGRESS_BOSS[index]} (${formatDate(dates[index])})`
     } else {
-      node.innerHTML = `${NATHRIA_BOSS[index]}`
+      node.innerHTML = `${CURRENT_PROGRESS_BOSS[index]}`
     }
     node.className += dates[index] ? 'boss-down' : ''
   })
@@ -67,4 +67,3 @@ const createPlayerColElement = () => {
 
   return div
 }
-

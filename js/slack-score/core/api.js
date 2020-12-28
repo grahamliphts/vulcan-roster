@@ -3,6 +3,7 @@ import {
   REALM,
   GUILD,
   LOCALE,
+  CURRENT_PROGRESS,
   BNET_CLIENT_ID,
   BNET_CLIENT_SECRET
 } from '../config.js'
@@ -20,8 +21,8 @@ export const getPlayerJobsUrl = (player, token) =>
 const RIO_HOST = 'https://raider.io/api/v1'
 export const getPlayerRaidProgressUrl = (player) =>
   `${RIO_HOST}/characters/profile?region=${REGION}&realm=${REALM}&name=${player}&fields=raid_progression`
-export const getGuildRaidProgressUrl = (raid, boss, mode) =>
-  `${RIO_HOST}/guilds/boss-kill?region=${REGION}&realm=${REALM}&guild=${GUILD}&raid=${raid}&boss=${boss}&difficulty=${mode}`
+export const getGuildRaidProgressUrl = (boss, mode) =>
+  `${RIO_HOST}/guilds/boss-kill?region=${REGION}&realm=${REALM}&guild=${GUILD}&raid=${CURRENT_PROGRESS}&boss=${boss}&difficulty=${mode}`
 
 export const jsonFetch = (url) =>
   fetch(url)

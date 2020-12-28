@@ -1,6 +1,6 @@
 import { slug } from './string.js'
 
-export const NATHRIA_BOSS = [
+export const CURRENT_PROGRESS_BOSS = [
   'Shriekwing',
   'Huntsman Altimor',
   'Hungering Destroyer',
@@ -13,7 +13,7 @@ export const NATHRIA_BOSS = [
   'Sire Denathrius'
 ]
 
-export const NATHRIA_BOSS_SLUGS = NATHRIA_BOSS.map(boss => slug(boss))
+export const CURRENT_PROGRESS_BOSS_SLUGS = CURRENT_PROGRESS_BOSS.map(boss => slug(boss))
 
 export const ENCHANTABLE_SLOTS = [
   'BACK',

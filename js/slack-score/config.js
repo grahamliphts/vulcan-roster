@@ -2,6 +2,7 @@ export const REGION = 'eu'
 export const REALM = 'hyjal'
 export const GUILD = 'vulcan'
 export const LOCALE = 'en_US'
+export const CURRENT_PROGRESS = 'castle-nathria'
 
 export const BNET_CLIENT_ID = '3aa739b8c70c4af2993a6331178bd348'
 export const BNET_CLIENT_SECRET = 'HSBnqaMlHXHa3vQC6EJZOd8D5116F41k'
