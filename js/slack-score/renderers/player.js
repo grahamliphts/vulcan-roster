@@ -92,10 +92,7 @@ const printRaidProgress = ({ totalBosses, normalProgress, heroicProgress, mythic
   `
 
 const printMythicPlusProgress = ({ mythicPlusProgress }) => {
-  let mythicScore = 0
-
-  const dungeonHTML = mythicPlusProgress.map(run => {
-    mythicScore += run.score || 0
+  const dungeonHTML = mythicPlusProgress.bestRuns.map(run => {
     if (run.completed !== undefined) {
       const runClass = run.completed ? 'run-completed' : 'run-not-completed'
       return `
@@ -117,7 +114,7 @@ const printMythicPlusProgress = ({ mythicPlusProgress }) => {
     ${dungeonHTML}
     <div>
       <span class="modal-subsection-title">Mythic Score</span>
-      <span>${mythicScore.toFixed(2)}</span>
+      <span>${mythicPlusProgress.score}</span>
     </div>
     `
 }

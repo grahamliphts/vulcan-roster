@@ -92,7 +92,7 @@ const buildJob = (primary) => {
 }
 
 const buildProgress = async (player) =>
-  await callApi(getPlayerProgressUrl(player), ({ raid_progression, mythic_plus_best_runs }) => {
+  await callApi(getPlayerProgressUrl(player), ({ raid_progression, mythic_plus_best_runs, mythic_plus_scores }) => {
     const { total_bosses, normal_bosses_killed, heroic_bosses_killed, mythic_bosses_killed } = raid_progression['castle-nathria']
 
     return {
@@ -100,12 +100,12 @@ const buildProgress = async (player) =>
       normalProgress: normal_bosses_killed,
       heroicProgress: heroic_bosses_killed,
       mythicProgress: mythic_bosses_killed,
-      mythicPlusProgress: buildMythicPlusProgress(mythic_plus_best_runs)
+      mythicPlusProgress: buildMythicPlusProgress(mythic_plus_best_runs, mythic_plus_scores.all)
     }
   })
 
-const buildMythicPlusProgress = (mythicPlusBestRuns) => {
-  return CURRENT_DUNGEONS.map(dungeonName => {
+const buildMythicPlusProgress = (mythicPlusBestRuns, score) => ({
+  bestRuns: CURRENT_DUNGEONS.map(dungeonName => {
     const bestRun = mythicPlusBestRuns.find(({ dungeon }) => dungeon === dungeonName)
     return bestRun ? {
       name: dungeonName,
@@ -116,5 +116,6 @@ const buildMythicPlusProgress = (mythicPlusBestRuns) => {
       name: dungeonName,
       completed: undefined,
     }
-  })
-}
+  }), 
+  score
+})
