@@ -139,3 +139,8 @@
   position: absolute;
   margin-top: -30px;
 }
+
+#filters {
+  background-color: #F7F7F7;
+  padding-top: 30px;
+}

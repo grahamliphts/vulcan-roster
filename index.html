@@ -121,6 +121,33 @@ Author URL: http://w3layouts.com
     <div id="progress-label">Fetch the slackers...</div>
   </div>
 
+  <div id="filters" class="vulcan-hidden filters">
+    <div class="row center-block">
+      <div class="col-xs-2">
+        <select id="role-filter" class="form-control">
+          <option value="any">Role</option>
+          <option value="tank">Tank</option>
+          <option value="dps">DPS</option>
+          <option value="heal">Heal</option>
+        </select>
+      </div>
+      <div class="col-xs-2">
+        <input id="min-mythic-score-filter" class="form-control" type="number" placeholder="Minimum mythic score"/>
+      </div>
+      <div class="col-xs-2">
+        <input id="max-mythic-score-filter" class="form-control" type="number" placeholder="Maximum mythic score"/>
+      </div>
+      <div class="col-xs-2">
+        <select id="order-filter" class="form-control">
+          <option value="none">Order</option>
+          <option value="slackerFirst">Slacker first (RIO)</option>
+          <option value="pgmFirst">PGM first (RIO)</option>
+        </select>
+      </div>
+      </form>
+    </div>
+  </div>
+
 	<!-- Roster 1 -->
 	<div class="services vulcan-hidden" id="roster_1">
 		<div class="container">
