@@ -5,7 +5,7 @@ export const LOCALE = 'en_US'
 export const CURRENT_PROGRESS = 'castle-nathria'
 
 export const BNET_CLIENT_ID = '3aa739b8c70c4af2993a6331178bd348'
-export const BNET_CLIENT_SECRET = 'USN1hQHNFPIrMtsPWoF2dmc96yjQIp28N1'
+export const BNET_CLIENT_SECRET = 'HSBnqaMlHXHa3vQC6EJZOd8D5116F41k'
 
 export const ILVL_THRESHOLD = 170
 export const SLACK_SCORE_THRESHOLD = 2
