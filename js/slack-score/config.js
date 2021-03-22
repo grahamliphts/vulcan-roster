@@ -11,38 +11,39 @@ export const ILVL_THRESHOLD = 170
 export const SLACK_SCORE_THRESHOLD = 2
 
 export const PLAYERS_ROSTER_1 = [
-  {name: 'anawelle', role: 'dps'},
-  {name: 'azouki', role: 'dps'},
-  {name: 'celuryl', role: 'tank'}, 
-  {name: 'chandarax', role: 'heal'}, 
-  {name: 'fripougnette', role: 'dps'},
-  {name: 'grigadc', role: 'dps'},
+  {name: 'vanii', role: 'tank'},
+  {name: 'elzegan', role: 'tank'}, 
+
+  {name: 'skýlorg', role: 'heal'},
   {name: 'harnoêl', role: 'heal'},
-  {name: 'konian', role: 'dps'},
-  {name: 'lalia', role: 'dps'},
-  {name: 'monspiets', role: 'dps'},
   {name: 'pateàcrepe', role: 'heal'},
+
+  {name: 'grigadc', role: 'dps'},
   {name: 'skëmp', role: 'dps'},
   {name: 'valyriä', role: 'dps'},
-  {name: 'vanii', role: 'tank'}, 
+  {name: 'lalia', role: 'dps'},
+  {name: 'fripougnette', role: 'dps'},
+  {name: 'maxidoo', role: 'dps'},
+  {name: 'soupeline', role: 'dps'},
+  {name: 'sarrg', role: 'dps'},
+  {name: 'sahyaa', role: 'dps'},
+  {name: 'shadomasou', role: 'dps'},
 ]
 
 export const PLAYERS_ROSTER_2 = [
   {name: 'athénaís', role: 'heal'},
   {name: 'elzegan', role: 'tank'}, 
-  {name: 'kasparrow', role: 'tank'}, 
+  //{name: 'kasparrow', role: 'tank'}, 
   {name: 'fiedryeva', role: 'dps'},
   {name: 'høkanashir', role: 'dps'},
   {name: 'kanech', role: 'heal'},
-  {name: 'maxidoo', role: 'dps'},
+  
   {name: 'norÿ', role: 'dps'},
   {name: 'nydile', role: 'heal'},
   {name: 'rogalhorn', role: 'dps'},
-  {name: 'sarrg', role: 'dps'},
-  {name: 'sahyaa', role: 'dps'},
-  {name: 'shadomasou', role: 'dps'},
+  
   {name: 'skýlorg', role: 'heal'},
-  {name: 'soupeline', role: 'dps'},
+  
   {name: 'tyänna', role: 'dps'},
   {name: 'universis', role: 'dps'},
 ]

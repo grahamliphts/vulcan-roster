@@ -310,7 +310,7 @@ body{
 }
 .services-grid-right-grid{
     width: 80px;
-    height: 80px;
+	height: 80px;
     background: #f5f5f5;
     border: 1px solid #b9b9b9;
     border-radius: 50%;
@@ -318,7 +318,7 @@ body{
     -moz-border-radius: 50%;
     -o-border-radius: 50%;
     -ms-border-radius: 50%;
-    text-align: center;
+	text-align: center;
     margin: 0 auto;
 }
 .services-grid-right-grid span{
