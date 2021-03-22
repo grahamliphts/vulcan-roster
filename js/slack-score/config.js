@@ -31,19 +31,20 @@ export const PLAYERS_ROSTER_1 = [
 ]
 
 export const PLAYERS_ROSTER_2 = [
-  {name: 'athénaís', role: 'heal'},
-  {name: 'elzegan', role: 'tank'}, 
-  //{name: 'kasparrow', role: 'tank'}, 
-  {name: 'fiedryeva', role: 'dps'},
-  {name: 'høkanashir', role: 'dps'},
-  {name: 'kanech', role: 'heal'},
+  {name: 'maxidoo', role: 'dps'},
+  // {name: 'athénaís', role: 'heal'},
+  // {name: 'elzegan', role: 'tank'}, 
+  // //{name: 'kasparrow', role: 'tank'}, 
+  // {name: 'fiedryeva', role: 'dps'},
+  // {name: 'høkanashir', role: 'dps'},
+  // {name: 'kanech', role: 'heal'},
   
-  {name: 'norÿ', role: 'dps'},
-  {name: 'nydile', role: 'heal'},
-  {name: 'rogalhorn', role: 'dps'},
+  // {name: 'norÿ', role: 'dps'},
+  // {name: 'nydile', role: 'heal'},
+  // {name: 'rogalhorn', role: 'dps'},
   
-  {name: 'skýlorg', role: 'heal'},
+  // {name: 'skýlorg', role: 'heal'},
   
-  {name: 'tyänna', role: 'dps'},
-  {name: 'universis', role: 'dps'},
+  // {name: 'tyänna', role: 'dps'},
+  // {name: 'universis', role: 'dps'},
 ]
