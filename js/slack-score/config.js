@@ -7,7 +7,7 @@ export const CURRENT_PROGRESS = 'castle-nathria'
 export const BNET_CLIENT_ID = '3aa739b8c70c4af2993a6331178bd348'
 export const BNET_CLIENT_SECRET = 'HSBnqaMlHXHa3vQC6EJZOd8D5116F41k'
 
-export const ILVL_THRESHOLD = 170
+export const ILVL_THRESHOLD = 215
 export const SLACK_SCORE_THRESHOLD = 2
 
 export const PLAYERS_ROSTER_1 = [
