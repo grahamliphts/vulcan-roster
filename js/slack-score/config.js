@@ -32,9 +32,9 @@ export const PLAYERS_ROSTER_1 = [
 
 export const PLAYERS_ROSTER_2 = [
   {name: 'maxidoo', role: 'dps'},
-  // {name: 'athénaís', role: 'heal'},
-  // {name: 'elzegan', role: 'tank'}, 
-  // //{name: 'kasparrow', role: 'tank'}, 
+  {name: 'athénaís', role: 'heal'},
+  {name: 'elzegan', role: 'tank'}, 
+  //{name: 'kasparrow', role: 'tank'}, 
   // {name: 'fiedryeva', role: 'dps'},
   // {name: 'høkanashir', role: 'dps'},
   // {name: 'kanech', role: 'heal'},

@@ -46,6 +46,7 @@ export const callApi = async (url, callback) => {
 
 export async function getToken(callback) {
     let url = `https://${REGION}.battle.net/oauth/token?client_id=${BNET_CLIENT_ID}&client_secret=${BNET_CLIENT_SECRET}&grant_type=client_credentials`
+
   let token = (await jsonFetch(url, { method: 'POST'})).access_token
     return callback(token)
 }
